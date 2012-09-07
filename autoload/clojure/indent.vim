@@ -61,7 +61,7 @@ function! clojure#indent#get(lnum)
 
   call cursor(0, 1)
   let pos = {}
-  let pos.paren = s:match_pairs('(', 'bWn')
+  let pos.paren = s:match_pairs('(', 'bWn', search('^(', 'bWn'))
   let pos.bracket = s:match_pairs('[', 'bWn', pos.paren[0])
   let pos.curly = s:match_pairs('{', 'bWn', pos.bracket[0])
   let nearest = s:max_pos(pos)

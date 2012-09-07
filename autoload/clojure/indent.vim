@@ -11,7 +11,7 @@ let s:paren_types = {
 \   '[': ['\[', '\]'],
 \ }
 
-function! s:syn_name(...)
+function! s:syn_name()
   let stack = synstack(line('.'), col('.'))
   return empty(stack) ? '' : synIDattr(stack[-1], "name")
 endfunction

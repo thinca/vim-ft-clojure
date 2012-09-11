@@ -15,7 +15,7 @@ syntax sync fromstart
 
 syntax match clojureError /]\|}\|)/
 
-syntax cluster clojureAtoms contains=clojureError,clojureKeyword,clojureString,clojureCharacter,clojureBoolean,clojureNil,clojureQuote,clojureUnquote,clojureDispatch,clojureRegexp,clojureJavaNew,clojureJavaMethod
+syntax cluster clojureAtoms contains=clojureError,clojureKeyword,clojureString,clojureCharacter,clojureBoolean,clojureNil,clojureQuote,clojureUnquote,clojureDispatch,clojureRegexp,clojureJavaNew,clojureJavaMethod,clojureAnonFnArgs
 syntax cluster clojureTop contains=@clojureAtoms,clojureComment,clojureSexp,clojureAnonFn,clojureVector,clojureMap,clojureSet
 
 syntax keyword clojureBoolean true false
@@ -58,7 +58,7 @@ syntax region clojureMapLevelTop matchgroup=clojureParenLevelTop start=/#{/ end=
 syntax region clojureMapLevelTop matchgroup=clojureParenLevelTop start=/{/ end=/}/ contains=@clojureTop,@clojureNestLevel0
 call clojure#syntax#define_rainbows()
 
-syntax match clojureAnonFnArgs display /\<%\d*\>/ contained
+syntax match clojureAnonFnArgs display /%\d\+\>\|%/ contained
 
 call clojure#syntax#define_keywords()
 

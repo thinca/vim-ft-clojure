@@ -5,37 +5,33 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-if !exists('g:clojure#syntax#paren_colors_dark')
-  let g:clojure#syntax#paren_colors_dark = [
-  \   'ctermfg=yellow  guifg=orange1',
-  \   'ctermfg=green   guifg=yellow1',
-  \   'ctermfg=cyan    guifg=greenyellow',
-  \   'ctermfg=magenta guifg=green1',
-  \   'ctermfg=red     guifg=springgreen1',
-  \   'ctermfg=yellow  guifg=cyan1',
-  \   'ctermfg=green   guifg=slateblue1',
-  \   'ctermfg=cyan    guifg=magenta1',
-  \   'ctermfg=magenta guifg=purple1'
-  \ ]
-endif
-
-if !exists('g:clojure#syntax#paren_colors_light')
-  let g:clojure#syntax#paren_colors_light = [
-  \   'ctermfg=darkyellow  guifg=orangered3',
-  \   'ctermfg=darkgreen   guifg=orange2',
-  \   'ctermfg=blue        guifg=yellow3',
-  \   'ctermfg=darkmagenta guifg=olivedrab4',
-  \   'ctermfg=red         guifg=green4',
-  \   'ctermfg=darkyellow  guifg=paleturquoise3',
-  \   'ctermfg=darkgreen   guifg=deepskyblue4',
-  \   'ctermfg=blue        guifg=darkslateblue',
-  \   'ctermfg=darkmagenta guifg=darkviolet'
-  \ ]
+if !exists('g:clojure#syntax#paren_colors')
+  let g:clojure#syntax#paren_colors = {
+  \   'dark': {
+  \     'gui': ['Red1', 'Orange1', 'Yellow1', 'Greenyellow', 'Green1',
+  \       'Springgreen1', 'Cyan1', 'Slateblue1', 'Purple1', 'Magenta1'],
+  \     'cterm256': [196, 214, 226, 155, 46, 48, 51, 141, 135, 201],
+  \     'cterm': ['Red', 'Yellow', 'Green', 'Cyan', 'Blue', 'Magenta'],
+  \   },
+  \   'light': {
+  \     'gui': ['Red3', 'Orangered3', 'Orange2', 'Yellow3', 'Olivedrab4',
+  \       'Green4', 'Paleturquoise3', 'Deepskyblue4', 'Darkslateblue', 'Darkviolet'],
+  \     'cterm256': [160, 166, 214, 184, 107, 34, 152, 31, 61, 128],
+  \     'cterm': ['DarkRed', 'DarkYellow', 'DarkGreen', 'DarkCyan', 'DarkMagenta'],
+  \   },
+  \ }
 endif
 
 function! s:colors()
-  return &background ==# 'dark' ? g:clojure#syntax#paren_colors_dark
-  \                             : g:clojure#syntax#paren_colors_light
+  let base = get(g:clojure#syntax#paren_colors, &background, {})
+  if has('gui_running') && has_key(base, 'gui')
+    return {'colors': base.gui, 'type': 'gui'}
+  elseif has_key(base, 'cterm' . &t_Co)
+    return {'colors': base['cterm' . &t_Co], 'type': 'cterm'}
+  elseif has_key(base, 'cterm')
+    return {'colors': base.cterm, 'type': 'cterm'}
+  endif
+  return {'colors': [], 'type': ''}
 endfunction
 
 
@@ -57,7 +53,7 @@ function! clojure#syntax#define_numbers()
 endfunction
 
 function! clojure#syntax#define_rainbows()
-  let colors = s:colors()
+  let colors = s:colors().colors
   let len = len(colors)
   for i in range(len)
     let next = (i + 1) % len
@@ -76,9 +72,11 @@ function! clojure#syntax#define_rainbows()
 endfunction
 
 function! clojure#syntax#define_rainbow_colors()
-  let colors = s:colors()
+  let dict = s:colors()
+  let colors = dict.colors
+  let type = dict.type
   for i in range(len(colors))
-    execute printf('highlight clojureParenLevel%d %s', i, colors[i - 1])
+    execute printf('highlight clojureParenLevel%d %sfg=%s', i, type, colors[i])
   endfor
 endfunction
 

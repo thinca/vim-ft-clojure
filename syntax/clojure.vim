@@ -32,9 +32,10 @@ syntax match clojureCharacter display "\\backspace\>"
 syntax match clojureCharacter display "\\formfeed\>"
 
 syntax region clojureString start=/"/  skip=/\\\\\|\\"/ end=/"/ contains=clojureStringSpecial
-syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureStringSpecial,clojureRegexpGroup,clojureRegexpCloseParenError
+syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureStringSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpCloseParenError
 syntax match clojureStringSpecial display /\\./ contained
-syntax region clojureRegexpGroup matchgroup=clojureParenLevelTop start=/(/ skip=/\\./ end=/)/ contained contains=clojureStringSpecial,clojureRegexpGroup,clojureRegexpOpenParenError
+syntax region clojureRegexpGroup matchgroup=clojureParenLevelTop start=/(/ skip=/\\./ end=/)/ contained contains=clojureStringSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpOpenParenError
+syntax region clojureRegexpClass matchgroup=clojureParenLevelTop start=/\[/ skip=/\\./ end=/\]/ contained transparent contains=clojureStringSpecial
 syntax match clojureRegexpOpenParenError display /\\\@<!"/ contained
 syntax match clojureRegexpCloseParenError display /)/ contained
 

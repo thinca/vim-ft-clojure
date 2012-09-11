@@ -32,10 +32,11 @@ syntax match clojureCharacter display "\\backspace\>"
 syntax match clojureCharacter display "\\formfeed\>"
 
 syntax region clojureString start=/"/  skip=/\\\\\|\\"/ end=/"/ contains=clojureStringSpecial
-syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureStringSpecial,clojureRegexpParen
+syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureStringSpecial,clojureRegexpParen,clojureRegexpCloseParenError
 syntax match clojureStringSpecial display /\\./ contained
-syntax region clojureRegexpParen matchgroup=clojureParenLevelTop start=/(/ skip=/\\./ end=/)/ contained contains=clojureStringSpecial,clojureRegexpParen,clojureRegexpError
-syntax match clojureRegexpError display /\\\@<!"/ contained
+syntax region clojureRegexpParen matchgroup=clojureParenLevelTop start=/(/ skip=/\\./ end=/)/ contained contains=clojureStringSpecial,clojureRegexpParen,clojureRegexpOpenParenError
+syntax match clojureRegexpOpenParenError display /\\\@<!"/ contained
+syntax match clojureRegexpCloseParenError display /)/ contained
 
 syntax match clojureKeyword display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+"
 
@@ -79,9 +80,12 @@ highlight default link clojureBoolean       Boolean
 highlight default link clojureNil           Constant
 highlight default link clojureString        String
 highlight default link clojureStringSpecial Special
-highlight default link clojureRegexp        String
-highlight default link clojureRegexpParen   String
-highlight default link clojureRegexpError   Error
+
+highlight default link clojureRegexp                String
+highlight default link clojureRegexpParen           String
+highlight default link clojureRegexpOpenParenError  Error
+highlight default link clojureRegexpCloseParenError Error
+
 highlight default link clojureKeyword       Operator
 highlight default link clojureCharacter     Character
 

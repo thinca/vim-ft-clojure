@@ -21,7 +21,7 @@ syntax cluster clojureTop contains=@clojureAtoms,clojureComment,clojureSexp,cloj
 syntax keyword clojureBoolean true false
 syntax keyword clojureNil nil
 
-syntax match clojureCharacter display "\\.\>"
+syntax match clojureCharacter display "\\."
 syntax match clojureCharacter display "\\o[0-7]\{1,3}\>"
 syntax match clojureCharacter display "\\u[0-9a-zA-Z]\{4}\>"
 syntax match clojureCharacter display "\\space\>"

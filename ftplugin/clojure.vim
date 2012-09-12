@@ -21,3 +21,7 @@ if has('browsefilter') && !exists('b:browsefilter')
   \ "Jave Source Files (*.java)\t*.java\n" .
   \ "All Files (*.*)\t*.*\n"
 endif
+
+" for matchit.vim
+let b:match_words = '(:),{:},[:],\<try\>:\<catch\>'
+let b:match_skip = 's:comment\|string\|character'

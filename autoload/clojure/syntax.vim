@@ -83,6 +83,7 @@ endfunction
 function! clojure#syntax#define_keywords()
   let files = globpath(&runtimepath, 'dict/clojure/**.txt', 1)
   let highlights = {}
+  let dup = {}
   let links = {
   \   'Var': 'Identifier',
   \   'Protocol': 'Type',
@@ -95,7 +96,12 @@ function! clojure#syntax#define_keywords()
         continue
       endif
       let [ns, type, symbol] = list
-      let esymbol = escape(symbol, '\')
+      let key = ns . '/' . symbol
+      if has_key(dup, key)
+        continue
+      else
+        let dup[key] = 1
+      endif
       let highlights[type] = 1
       if ns !=# ''
         execute printf('syntax keyword clojure%s %s/%s', type, ns, symbol)

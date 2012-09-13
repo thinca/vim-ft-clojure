@@ -53,12 +53,7 @@ syntax match clojureJavaMethod display "\<\.[a-zA-Z_]\w*\>"
 syntax match clojureJavaNew display "\<\u\w*\.\>"
 
 
-syntax region clojureExprLevelTop matchgroup=clojureAnnonFnLevelTop start=/#(/ end=/)/ contains=@clojureTop,@clojureNestLevel0
-syntax region clojureExprLevelTop matchgroup=clojureParenLevelTop start=/(/ end=/)/ contains=@clojureTop,@clojureNestLevel0
-syntax region clojureVectorLevelTop matchgroup=clojureParenLevelTop start=/\[/ end=/\]/ contains=@clojureTop,@clojureNestLevel0
-syntax region clojureMapLevelTop matchgroup=clojureParenLevelTop start=/#{/ end=/}/ contains=@clojureTop,@clojureNestLevel0
-syntax region clojureMapLevelTop matchgroup=clojureParenLevelTop start=/{/ end=/}/ contains=@clojureTop,@clojureNestLevel0
-call clojure#syntax#define_rainbows()
+call clojure#syntax#define_parens()
 
 syntax match clojureAnonFnArgs display /%\d\+\>\|%/ contained
 

@@ -52,9 +52,23 @@ function! clojure#syntax#define_numbers()
   highlight default link clojureNumber Number
 endfunction
 
-function! clojure#syntax#define_rainbows()
+function! clojure#syntax#define_parens()
   let colors = s:colors().colors
-  let len = len(colors)
+  syntax region clojureAnnonFnLevelTop matchgroup=clojureParenLevelTop start=/#(/ end=/)/ contains=@clojureNestLevelTop
+  syntax region clojureExprLevelTop matchgroup=clojureParenLevelTop start=/(/ end=/)/ contains=@clojureNestLevelTop
+  syntax region clojureVectorLevelTop matchgroup=clojureParenLevelTop start=/\[/ end=/\]/ contains=@clojureNestLevelTop
+  syntax region clojureSetLevelTop matchgroup=clojureParenLevelTop start=/#{/ end=/}/ contains=@clojureNestLevelTop
+  syntax region clojureMapLevelTop matchgroup=clojureParenLevelTop start=/{/ end=/}/ contains=@clojureNestLevelTop
+  if empty(colors)
+    syntax cluster clojureNestLevelTop contains=@clojureTop,clojure.*LevelTop
+  else
+    syntax cluster clojureNestLevelTop contains=@clojureTop,@clojureNestLevel0
+    call clojure#syntax#define_rainbows(colors)
+  endif
+endfunction
+
+function! clojure#syntax#define_rainbows(colors)
+  let len = len(a:colors)
   for i in range(len)
     let next = (i + 1) % len
     execute printf('syntax region clojureAnonFnLevel%d matchgroup=clojureParenLevelTop start=/#(/ end=/)/ contained contains=@clojureNestLevel%d,clojureAnonFnArgs', i, i)

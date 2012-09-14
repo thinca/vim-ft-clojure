@@ -5,6 +5,8 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+let g:clojure#indent#special = get(g:, 'clojure#indent#special', '^$')
+
 let s:paren_types = {
 \   '(': ['(', ')'],
 \   '{': ['{', '}'],
@@ -45,6 +47,12 @@ function! s:max_pos(positions)
     endif
   endfor
   return max
+endfunction
+
+function! s:is_special(word)
+  return &l:lispwords =~# '\V\<' . a:word . '\>' ||
+  \     a:word =~# g:clojure#indent#special ||
+  \     a:word =~# get(b:, 'clojure_indent_special', '^$')
 endfunction
 
 function! clojure#indent#get(lnum)
@@ -90,7 +98,7 @@ function! clojure#indent#get(lnum)
       let indent = virtcol('.')
     endif
   endif
-  if follow !=# '' && &l:lispwords !~# '\V\<' . func . '\>'
+  if follow !=# '' && !s:is_special(func)
     let indent += len(func . follow)
   else
     let indent += &shiftwidth - 1

@@ -8,6 +8,9 @@ endif
 
 let b:did_ftplugin = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 setlocal expandtab
 setlocal iskeyword+=?,-,*,!,+,=,<,>,.,:,/
 
@@ -27,3 +30,6 @@ endif
 " for matchit.vim
 let b:match_words = '(:),{:},[:],\<try\>:\<catch\>'
 let b:match_skip = 's:comment\|string\|character'
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

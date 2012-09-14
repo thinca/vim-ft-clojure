@@ -36,7 +36,6 @@ setlocal indentexpr=clojure#indent#get(v:lnum)
 
 setlocal noautoindent nosmartindent
 setlocal indentkeys=!^f,o,O
-" setlocal indentkeys=!^f,o,O,(,),[,],{,}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

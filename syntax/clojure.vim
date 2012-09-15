@@ -61,7 +61,7 @@ call clojure#syntax#define_keywords()
 
 syntax match clojureComment ";.*$"
 syntax region clojureIgnoreFormComment matchgroup=clojureComment start="#_("          end=")" contains=clojureParenInComment
-syntax region clojureMacroComment      matchgroup=clojureComment start="(\_s*comment" end=")" contains=clojureParenInComment
+syntax region clojureMacroComment      matchgroup=clojureComment start="(\_s*comment\>" end=")" contains=clojureParenInComment
 syntax region clojureParenInComment    matchgroup=clojureComment start="("            end=")" contains=clojureParenInComment contained
 syntax cluster clojureTop add=clojureIgnoreFormComment,clojureMacroComment
 

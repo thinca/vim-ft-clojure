@@ -1,0 +1,116 @@
+*ft-clojure.txt*	FileType support for Clojure.
+
+Version: 1.0
+Author : thinca <thinca+vim@gmail.com>
+License: zlib License
+
+==============================================================================
+CONTENTS					*ft-clojure-contents*
+
+INTRODUCTION			|ft-clojure-introduction|
+SYNTAX				|ft-clojure-syntax|
+INDENT				|ft-clojure-indent|
+
+
+
+==============================================================================
+INTRODUCTION					*ft-clojure-introduction*
+
+*ft-clojure* is a filetype support plugin for Clojure.  This provides
+following features about Clojure.
+
+- filetype plugin
+- indent plugin
+- syntax file
+
+Clojure: http://clojure.org/
+
+Requirements:
+- Vim 7.3 or later
+
+Latest version:
+https://github.com/thinca/vim-ft-clojure
+
+
+
+==============================================================================
+SYNTAX						*ft-clojure-syntax*
+
+g:clojure#syntax#paren_colors			*g:clojure#syntax#paren_colors*
+	Specifies the paren colors by dictionary.
+	First, this contains "dark" and "light" element.  This corresponds to
+	the value of 'background'.
+	Each values are also dictionary.  Its key is a environment, value is a
+	list of colors.  The environment is followings.
+	"gui":		This is used when `has("gui_running")` is true.
+	"term" . &t_Co:	This is used when `has("gui_running")` is false and
+			|t_Co| is matched.
+	"term":		Otherwise.
+
+	Example(Default value):
+>
+	let g:clojure#syntax#paren_colors = {
+	\   'dark': {
+	\     'gui': ['Red1', 'Orange1', 'Yellow1', 'Greenyellow', 'Green1',
+	\       'Springgreen1', 'Cyan1', 'Slateblue1', 'Purple1', 'Magenta1'],
+	\     'cterm256': [196, 214, 226, 155, 46, 48, 51, 141, 135, 201],
+	\     'cterm': ['Red', 'Yellow', 'Green', 'Cyan', 'Blue', 'Magenta'],
+	\   },
+	\   'light': {
+	\     'gui': ['Red3', 'Orangered3', 'Orange2', 'Yellow3',
+	\             'Olivedrab4', 'Green4', 'Paleturquoise3',
+	\             'Deepskyblue4', 'Darkslateblue', 'Darkviolet'],
+	\     'cterm256': [160, 166, 214, 184, 107, 34, 152, 31, 61, 128],
+	\     'cterm': ['DarkRed', 'DarkYellow', 'DarkGreen',
+	\               'DarkCyan', 'DarkMagenta'],
+	\   },
+	\ }
+<
+	If you want to disable this feature, please specify an empty list.
+	You can omit an empty dictionary.  So, the minimum setting is here.
+>
+	let g:clojure#syntax#paren_colors = {}
+
+
+
+==============================================================================
+INDENT						*ft-clojure-indent*
+
+This indent plugin depends on syntax.  You must enable syntax.
+
+g:clojure#indent#special			*g:clojure#indent#special*
+b:clojure_indent_special			*b:clojure_indent_special*
+	Specifies a pattern that matches to special functions.
+	Normally, this plugin indents as following:
+>
+	(func arg1
+	      arg2)
+<
+	A function that is included to 'lispwords' is indented as following:
+	(Indention width is 'shiftwidth'.)
+>
+	(func arg1
+	  arg2)
+<
+	If a function is matched to this pattern, it is treated as latter.
+
+NOTE:
+
+- The open parenthesis of top level should be placed on the leftest of line.
+  - This script uses this rule for performance optimization.
+
+- Currently, commented code is not indented well.
+>
+	(defn func []
+	  (comment
+	  (((foo
+	  bar))))
+	  #_(foo
+	  bar)
+	  (foo
+	    bar))
+
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

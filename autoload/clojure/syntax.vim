@@ -39,7 +39,7 @@ function! clojure#syntax#define_numbers()
   let radix_chars = '0123456789abcdefghijklmnopqrstuvwxyz'
   for radix in range(2, 36)
     execute 'syntax match clojureIntNumber display ' .
-    \ printf('"\c\<[-+]\?%d[rR][%s]\+N\?\>"', radix, radix_chars[: radix - 1])
+    \ printf('"\c\<[-+]\?%dr[%s]\+N\?\>"', radix, radix_chars[: radix - 1])
   endfor
   syntax match clojureIntNumber display "\<[-+]\?\%(0\|([1-9][0-9]*)\|0[xX]([0-9A-Fa-f]\+)\|0([0-7]\+)\)N\?\>"
   syntax match clojureFloatNumber display "\<[-+]\?[0-9]\+\%(\.[0-9]*\)\?\%([eE][-+]\?[0-9]\+\)\?M\?"

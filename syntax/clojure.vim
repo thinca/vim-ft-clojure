@@ -42,7 +42,7 @@ syntax match clojureRegexpCloseParenError display /)/ contained
 syntax match clojureKeyword display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+"
 
 syntax match clojureQuote display "['`]"
-syntax match clojureUnquote display "\%(\~@\|\~\)"
+syntax match clojureUnquote display "\~@\?"
 syntax match clojureDispatch display "#['^]"
 syntax match clojureDispatch display "\^"
 

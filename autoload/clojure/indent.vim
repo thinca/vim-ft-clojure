@@ -104,6 +104,11 @@ function! clojure#indent#get(lnum)
     let indent += &shiftwidth - 1
   endif
 
+  let comment = getline(line)[col - 3 : col - 2] ==# '#_'
+  if comment
+    let indent -= 2
+  endif
+
   return indent
 endfunction
 

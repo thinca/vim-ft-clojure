@@ -60,17 +60,20 @@ syntax match clojureAnonFnArgs display /%\d\+\>\|%/ contained
 call clojure#syntax#define_keywords()
 
 syntax match clojureComment ";.*$"
-syntax region clojureIgnoreFormComment matchgroup=clojureComment start="#_("          end=")" contains=clojureParenInComment
-syntax region clojureMacroComment      matchgroup=clojureComment start="(\_s*comment\>" end=")" contains=clojureParenInComment
-syntax region clojureParenInComment    matchgroup=clojureComment start="("            end=")" contains=clojureParenInComment contained
+syntax region clojureIgnoreFormComment matchgroup=clojureParenLevelComment start="#_("            end=")" contains=clojureRangeComment
+syntax region clojureMacroComment      matchgroup=clojureParenLevelComment start="(\_s*comment\>" end=")" contains=clojureRangeComment
+syntax region clojureRangeComment matchgroup=clojureParenLevelComment start="("  end=")"  contains=clojureRangeComment contained
+syntax region clojureRangeComment matchgroup=clojureParenLevelComment start="\[" end="\]" contains=clojureRangeComment contained
+syntax region clojureRangeComment matchgroup=clojureParenLevelComment start="{"  end="}"  contains=clojureRangeComment contained
 syntax cluster clojureTop add=clojureIgnoreFormComment,clojureMacroComment
 
 highlight default link clojureIgnoreFormComment clojureComment
 highlight default link clojureMacroComment      clojureComment
-highlight default link clojureParenInComment    clojureComment
+highlight default link clojureRangeComment      clojureComment
+highlight default link clojureParenLevelComment clojureComment
 
 
-highlight default link clojureComment       Comment
+highlight default link clojureComment Comment
 
 highlight default link clojureBoolean       Boolean
 highlight default link clojureNil           Constant

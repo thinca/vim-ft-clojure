@@ -99,17 +99,6 @@ NOTE:
 - The open parenthesis of top level should be placed on the leftest of line.
   - This script uses this rule for performance optimization.
 
-- Currently, commented code is not indented well.
->
-	(defn func []
-	  (comment
-	  (((foo
-	  bar))))
-	  #_(foo
-	  bar)
-	  (foo
-	    bar))
-
 
 
 ==============================================================================

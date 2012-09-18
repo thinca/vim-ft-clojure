@@ -93,8 +93,6 @@ highlight default link clojureJavaMethod Function
 highlight default link clojureQuote    Special
 highlight default link clojureUnquote  Special
 highlight default link clojureDispatch Special
-highlight default link clojureAnonArg  Special
-highlight default link clojureVarArg   Special
 
 highlight default link clojureParenLevelTop Delimiter
 highlight default link clojureAnonFnArgs Delimiter

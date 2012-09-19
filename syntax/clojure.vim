@@ -52,7 +52,7 @@ syntax match clojureQuote display /['`]/
 syntax match clojureUnquote display /\~@\?/
 syntax match clojureDispatch display /#['^]/
 syntax match clojureDispatch display /\^/
-syntax match clojureAnonFnArgs display /%\d\+\>\|%/ contained
+syntax match clojureAnonFnArgs display /%\d\+\>\|%&\?/ contained
 
 " Java support
 syntax match clojureJavaMethod display /\<\.[a-zA-Z_]\w*\>/

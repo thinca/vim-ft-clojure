@@ -50,6 +50,10 @@ function! s:max_pos(positions)
   return max
 endfunction
 
+function! s:get_head(pos)
+  return getline(a:pos[0])[a:pos[1] :]
+endfunction
+
 function! s:is_special(word)
   return &l:lispwords =~# '\V\<' . a:word . '\>' ||
   \     a:word =~# g:clojure#indent#special ||
@@ -89,8 +93,7 @@ function! clojure#indent#get(lnum)
   endif
 
   let indent = virtcol(pos.paren)
-  let [line, col] = pos.paren
-  let head = getline(line)[col :]
+  let head = s:get_head(pos.paren)
   let [func, follow] = matchlist(head, '^\s*\(\S*\)\(\s*\)')[1 : 2]
 
   " ((func arg) foo
@@ -100,7 +103,7 @@ function! clojure#indent#get(lnum)
     call search('[({[]')
     let ch = getline(line('.'))[col('.') - 1]
     call s:match_pairs(ch, 'W')
-    let head = getline(line('.'))[col('.') :]
+    let head = s:get_head([line('.'), col('.')])
     let func = ''
     let follow = matchstr(head, '^\s*')
     if follow !=# ''
@@ -124,6 +127,7 @@ function! clojure#indent#get(lnum)
   endif
 
   " Adjust for #_(...)
+  let [line, col] = pos.paren
   let comment = getline(line)[col - 3 : col - 2] ==# '#_'
   if comment
     let indent -= 2

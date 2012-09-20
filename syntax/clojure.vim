@@ -36,14 +36,18 @@ syntax match clojureCharacter display /\\formfeed\>/
 " Numbers
 call clojure#syntax#define_numbers()
 
-" String and Regexp
-syntax region clojureString start=/"/  skip=/\\\\\|\\"/ end=/"/ contains=clojureStringSpecial
-syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureStringSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpCloseParenError
-syntax match clojureStringSpecial display /\\./ contained
-syntax region clojureRegexpGroup matchgroup=clojureParenLevelTop start=/(/ skip=/\\./ end=/)/ contained contains=clojureStringSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpOpenParenError
-syntax region clojureRegexpClass matchgroup=clojureParenLevelTop start=/\[/ skip=/\\./ end=/\]/ contained transparent contains=clojureStringSpecial
+" String
+syntax region clojureString start=/"/  skip=/\\\\\|\\"/ end=/"/ contains=clojureStringError,clojureStringSpecial
+syntax match clojureStringError display /\\./ contained
+syntax match clojureStringSpecial display /\\\%([btnfr"'\\]\|[0-3]\o\{2}\|u\x\{4}\)/ contained
+
+" Regexp
+syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureRegexpSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpCloseParenError
+syntax match clojureRegexpSpecial display /\\./ contained
+syntax region clojureRegexpGroup matchgroup=clojureParenLevelTop start=/(/ skip=/\\./ end=/)/ contained contains=clojureRegexpSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpOpenParenError
+syntax region clojureRegexpClass matchgroup=clojureParenLevelTop start=/\[/ skip=/\\./ end=/\]/ contained transparent contains=clojureRegexpSpecial,clojureRegexpOpenParenError
 syntax match clojureRegexpOpenParenError display /\\\@<!"/ contained
-syntax match clojureRegexpCloseParenError display /)/ contained
+syntax match clojureRegexpCloseParenError display /[\])]/ contained
 
 " Keyword, etc
 syntax match clojureKeyword display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+"
@@ -84,9 +88,12 @@ highlight default link clojureComment Comment
 highlight default link clojureBoolean       Boolean
 highlight default link clojureNil           Constant
 
-highlight default link clojureString                String
-highlight default link clojureStringSpecial         Special
+highlight default link clojureString        String
+highlight default link clojureStringSpecial Special
+highlight default link clojureStringError   Error
+
 highlight default link clojureRegexp                String
+highlight default link clojureRegexpSpecial         Special
 highlight default link clojureRegexpGroup           String
 highlight default link clojureRegexpOpenParenError  Error
 highlight default link clojureRegexpCloseParenError Error

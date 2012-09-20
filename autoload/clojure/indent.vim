@@ -60,6 +60,7 @@ function! clojure#indent#get(lnum)
     return 0
   endif
 
+  " Inside of String or Regexp
   if s:syn_name() =~# '^clojure\%(String\|Regexp\)'
     let line = search('\\\@<!"', 'bW')
     if line
@@ -67,6 +68,7 @@ function! clojure#indent#get(lnum)
     endif
   endif
 
+  " Search nearest opening paren
   call cursor(0, 1)
   let pos = {}
   let limit = search('^(', 'bWn')
@@ -76,16 +78,22 @@ function! clojure#indent#get(lnum)
   let limit = max([limit, pos.bracket[0]])
   let pos.curly = s:match_pairs('{', 'bWn', limit)
   let nearest = s:max_pos(pos)
+
   if nearest ==# ''
+    " An opening paren was not found
     return 0
   elseif nearest !=# 'paren'
+    " [ or { was found
     return virtcol(pos[nearest])
   endif
 
+  let indent = virtcol(pos.paren)
   let [line, col] = pos.paren
-  let indent = virtcol([line, col])
   let head = getline(line)[col :]
   let [func, follow] = matchlist(head, '^\s*\(\S*\)\(\s*\)')[1 : 2]
+
+  " ((func arg) foo
+  "             bar)
   if func =~# '[({[]'
     call cursor(pos.paren)
     call search('[({[]')
@@ -98,12 +106,23 @@ function! clojure#indent#get(lnum)
       let indent = virtcol('.')
     endif
   endif
-  if follow !=# '' && !s:is_special(func)
-    let indent += len(func . follow)
-  else
+
+  if follow ==# '' || s:is_special(func)
+    " Follow nothing:
+    " (func
+    "   something)
+    " Special case:
+    " (let [x 10]
+    "   something)
     let indent += &shiftwidth - 1
+  else
+    " Normal case:
+    " (func [x 10]
+    "       something)
+    let indent += len(func . follow)
   endif
 
+  " Adjust for #_(...)
   let comment = getline(line)[col - 3 : col - 2] ==# '#_'
   if comment
     let indent -= 2

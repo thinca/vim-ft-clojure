@@ -13,6 +13,8 @@ let s:paren_types = {
 \   '[': ['\[', '\]'],
 \ }
 
+let s:PAREN_PATTERN = 'clojureParenLevel\w\+'
+
 function! s:syn_name()
   let stack = synstack(line('.'), col('.'))
   return empty(stack) ? '' : synIDattr(stack[-1], "name")
@@ -21,9 +23,8 @@ endfunction
 function! s:match_pairs(type, flag, ...)
   let [open, close] = s:paren_types[a:type]
   let stop = a:0 ? a:1 : 0
-  let pat = 'clojureParenLevel\w\+'
   return searchpairpos(open, '', close, a:flag,
-  \                    's:syn_name() !~# pat', stop)
+  \                    's:syn_name() !~# s:PAREN_PATTERN', stop)
 endfunction
 
 function! s:cmp_pos(pos1, pos2)

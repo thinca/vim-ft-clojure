@@ -6,6 +6,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let g:clojure#indent#special = get(g:, 'clojure#indent#special', '^$')
+let g:clojure#indent#proxy =
+\   get(g:, 'clojure#indent#proxy', '\%(proxy\|reify\)$')
 
 let s:paren_types = {
 \   '(': ['(', ')'],
@@ -76,9 +78,9 @@ function! clojure#indent#get(lnum)
   " Search nearest opening paren
   call cursor(0, 1)
   let pos = {}
-  let limit = search('^(', 'bWn')
-  let pos.paren = s:match_pairs('(', 'bWn', limit)
-  let limit = max([limit, pos.paren[0]])
+  let top_limit = search('^(', 'bWn')
+  let pos.paren = s:match_pairs('(', 'bWn', top_limit)
+  let limit = max([top_limit, pos.paren[0]])
   let pos.bracket = s:match_pairs('[', 'bWn', limit)
   let limit = max([limit, pos.bracket[0]])
   let pos.curly = s:match_pairs('{', 'bWn', limit)
@@ -111,7 +113,18 @@ function! clojure#indent#get(lnum)
     endif
   endif
 
-  if follow ==# '' || s:is_special(func)
+  let use_special = follow ==# ''
+  if !use_special
+    call cursor(pos.paren)
+    let parent = s:match_pairs('(', 'bWn', top_limit)
+    let head = s:get_head(parent)
+    let pfunc = matchstr(head, '^\s*\zs\w\+')
+    if pfunc =~# g:clojure#indent#proxy
+      let use_special = 1
+    endif
+  endif
+
+  if use_special || s:is_special(func)
     " Follow nothing:
     " (func
     "   something)

@@ -126,7 +126,7 @@ function! clojure#indent#get(lnum)
     let parent = s:match_pairs('(', 'bWn', top_limit)
     let head = s:get_head(parent)
     let pfunc = matchstr(head, '^\s*\zs\w\+')
-    if pfunc =~# g:clojure#indent#proxy
+    if s:match_option('proxy', pfunc)
       let use_special = 1
     endif
   endif

@@ -5,9 +5,17 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:clojure#indent#special = get(g:, 'clojure#indent#special', '^$')
+let s:default_special = '^$'
+let s:default_proxy = '\%(proxy\|reify\)$'
+let g:clojure#indent#special =
+\   get(g:, 'clojure#indent#special', s:default_special)
 let g:clojure#indent#proxy =
-\   get(g:, 'clojure#indent#proxy', '\%(proxy\|reify\)$')
+\   get(g:, 'clojure#indent#proxy', s:default_proxy)
+
+function! s:match_option(name, target)
+  return a:target =~# g:clojure#indent#{a:name} ||
+  \      a:target =~# get(b:, 'clojure_indent_' . a:name, s:default_{a:name})
+endfunction
 
 let s:paren_types = {
 \   '(': ['(', ')'],
@@ -58,8 +66,7 @@ endfunction
 
 function! s:is_special(word)
   return &l:lispwords =~# '\V\<' . a:word . '\>' ||
-  \     a:word =~# g:clojure#indent#special ||
-  \     a:word =~# get(b:, 'clojure_indent_special', '^$')
+  \      s:match_option('special', a:word)
 endfunction
 
 function! clojure#indent#get(lnum)

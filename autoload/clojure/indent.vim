@@ -13,8 +13,8 @@ let g:clojure#indent#proxy =
 \   get(g:, 'clojure#indent#proxy', s:default_proxy)
 
 function! s:match_option(name, target)
-  return a:target =~# g:clojure#indent#{a:name} ||
-  \      a:target =~# get(b:, 'clojure_indent_' . a:name, s:default_{a:name})
+  let b = 'b:clojure_indent_' . a:name
+  return a:target =~# (exists(b) ? eval(b) : g:clojure#indent#{a:name})
 endfunction
 
 let s:paren_types = {

@@ -94,6 +94,19 @@ b:clojure_indent_special			*b:clojure_indent_special*
 <
 	If a function is matched to this pattern, it is treated as latter.
 
+g:clojure#indent#proxy				*g:clojure#indent#proxy*
+b:clojure_indent_proxy				*b:clojure_indent_proxy*
+	Specifies a pattern that matches to functions like "proxy".
+	An S-expression contained in this function is treated by "special".
+	Example:
+>
+	(proxy [Foo] []
+	  (func1 []
+	    (foo arg1
+	         arg2))
+	  (func2 []
+	    (...)))
+
 NOTE:
 
 - The open parenthesis of top level should be placed on the leftest of line.

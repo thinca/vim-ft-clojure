@@ -108,7 +108,7 @@ highlight default link clojureQuote    Special
 highlight default link clojureUnquote  Special
 highlight default link clojureDispatch Special
 
-highlight default link clojureParenLevelTop Delimiter
+highlight default link clojureParenLevelTop Define
 highlight default link clojureAnonFnArgs Delimiter
 
 highlight default link clojureError Error

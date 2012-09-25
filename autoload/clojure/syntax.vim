@@ -71,7 +71,7 @@ function! clojure#syntax#define_rainbows(colors)
   let len = len(a:colors)
   for i in range(len)
     let next = (i + 1) % len
-    execute printf('syntax region clojureAnonFnLevel%d matchgroup=clojureParenLevelTop start=/#(/ end=/)/ contained contains=@clojureNestLevel%d,clojureAnonFnArgs', i, i)
+    execute printf('syntax region clojureAnonFnLevel%d matchgroup=clojureParenLevelTop start=/#(/ end=/)/ contained contains=@clojureNestLevel%d', i, i)
     execute printf('syntax region clojureExprLevel%d matchgroup=clojureParenLevel%d start=/(/ end=/)/ contained contains=@clojureNestLevel%d', i, i, next)
     execute printf('syntax region clojureVectorLevel%d matchgroup=clojureParenLevelTop start=/\[/ end=/\]/ contained contains=@clojureNestLevel%d', i, i)
     execute printf('syntax region clojureSetLevel%d matchgroup=clojureParenLevelTop start=/#{/ end=/}/ contained contains=@clojureNestLevel%d', i, i)

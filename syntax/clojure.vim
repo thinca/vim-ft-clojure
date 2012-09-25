@@ -61,7 +61,7 @@ syntax region clojureQuoted matchgroup=clojureParenLevelQuote start=/#\?{/ end=/
 syntax match clojureUnquote display /\~@\?/
 syntax match clojureDispatch display /#['^]/
 syntax match clojureDispatch display /\^/
-syntax match clojureAnonFnArgs display /%\d\+\>\|%&\?/ contained
+syntax match clojureAnonFnArgs display /%\d\+\>\|%&\?/
 
 " Java support
 syntax match clojureJavaMethod display /\<\.[a-zA-Z_]\w*\>/

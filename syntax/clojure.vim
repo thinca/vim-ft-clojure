@@ -44,8 +44,8 @@ syntax match clojureStringSpecial display /\\\%([btnfr"'\\]\|[0-3]\o\{2}\|u\x\{4
 " Regexp
 syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureRegexpSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpCloseParenError
 syntax match clojureRegexpSpecial display /\\./ contained
-syntax region clojureRegexpGroup matchgroup=clojureParenLevelTop start=/(/ skip=/\\./ end=/)/ contained contains=clojureRegexpSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpOpenParenError
-syntax region clojureRegexpClass matchgroup=clojureParenLevelTop start=/\[/ skip=/\\./ end=/\]/ contained transparent contains=clojureRegexpSpecial,clojureRegexpOpenParenError
+syntax region clojureRegexpGroup matchgroup=clojureParenSpecial start=/(/ skip=/\\./ end=/)/ contained contains=clojureRegexpSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpOpenParenError
+syntax region clojureRegexpClass matchgroup=clojureParenSpecial start=/\[/ skip=/\\./ end=/\]/ contained transparent contains=clojureRegexpSpecial,clojureRegexpOpenParenError
 syntax match clojureRegexpOpenParenError display /\\\@<!"/ contained
 syntax match clojureRegexpCloseParenError display /[\])]/ contained
 
@@ -116,7 +116,8 @@ highlight default link clojureUnquote         Special
 highlight default link clojureDispatch        Special
 
 highlight default link clojureParenLevelTop Define
-highlight default link clojureAnonFnArgs Delimiter
+highlight default link clojureParenSpecial  Special
+highlight default link clojureAnonFnArgs    Delimiter
 
 highlight default link clojureError Error
 

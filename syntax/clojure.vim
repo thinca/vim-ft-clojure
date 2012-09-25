@@ -51,8 +51,13 @@ syntax match clojureRegexpCloseParenError display /[\])]/ contained
 
 " Keyword, etc
 syntax match clojureKeyword display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+"
+syntax match clojureSymbol display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
 
-syntax match clojureQuote display /['`]/
+syntax match clojureQuote display /['`]/ nextgroup=clojureQuote,clojureQuoted,clojureSymbol
+syntax region clojureQuoted matchgroup=clojureParenLevelQuote start=/#\?(/ end=/)/  contains=@clojureTop,clojureQuoted contained
+syntax region clojureQuoted matchgroup=clojureParenLevelQuote start=/\[/   end=/\]/ contains=@clojureTop,clojureQuoted contained
+syntax region clojureQuoted matchgroup=clojureParenLevelQuote start=/#\?{/ end=/}/  contains=@clojureTop,clojureQuoted contained
+
 syntax match clojureUnquote display /\~@\?/
 syntax match clojureDispatch display /#['^]/
 syntax match clojureDispatch display /\^/
@@ -104,9 +109,11 @@ highlight default link clojureCharacter Character
 highlight default link clojureJavaNew    Structure
 highlight default link clojureJavaMethod Function
 
-highlight default link clojureQuote    Special
-highlight default link clojureUnquote  Special
-highlight default link clojureDispatch Special
+highlight default link clojureSymbol          Special
+highlight default link clojureQuote           Special
+highlight default link clojureParenLevelQuote Special
+highlight default link clojureUnquote         Special
+highlight default link clojureDispatch        Special
 
 highlight default link clojureParenLevelTop Define
 highlight default link clojureAnonFnArgs Delimiter

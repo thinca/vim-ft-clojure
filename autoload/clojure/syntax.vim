@@ -38,7 +38,7 @@ endfunction
 function! clojure#syntax#define_numbers()
   syntax match clojureFloatNumber display "\<[-+]\?[0-9]\+\%(\.[0-9]*\)\?\%([eE][-+]\?[0-9]\+\)\?M\?\>"
   syntax match clojureRatioNumber display "\<[-+]\?[0-9]\+/[0-9]\+\>"
-  syntax match clojureIntNumber display "\<[-+]\?\%(0\|[1-9][0-9]*\|0[xX][0-9A-Fa-f]\+\|0[0-7]\+\)N\?\>"
+  syntax match clojureIntNumber   display "\<[-+]\?\%(0\|[1-9][0-9]*\|0[xX][0-9A-Fa-f]\+\|0[0-7]\+\)N\?\>"
   let radix_chars = '0123456789abcdefghijklmnopqrstuvwxyz'
   for radix in range(2, 36)
     execute 'syntax match clojureIntNumber display ' .
@@ -46,19 +46,19 @@ function! clojure#syntax#define_numbers()
   endfor
   syntax cluster clojureAtoms add=clojureIntNumber,clojureFloatNumber,clojureRatioNumber,clojureNumber
 
-  highlight default link clojureIntNumber clojureNumber
+  highlight default link clojureIntNumber   clojureNumber
   highlight default link clojureFloatNumber clojureNumber
   highlight default link clojureRatioNumber clojureNumber
-  highlight default link clojureNumber Number
+  highlight default link clojureNumber      Number
 endfunction
 
 function! clojure#syntax#define_parens()
   let colors = s:colors().colors
-  syntax region clojureAnnonFnLevelTop matchgroup=clojureParenLevelTop start=/#(/ end=/)/ contains=@clojureNestLevelTop
-  syntax region clojureExprLevelTop matchgroup=clojureParenLevelTop start=/(/ end=/)/ contains=@clojureNestLevelTop
-  syntax region clojureVectorLevelTop matchgroup=clojureParenLevelTop start=/\[/ end=/\]/ contains=@clojureNestLevelTop
-  syntax region clojureSetLevelTop matchgroup=clojureParenLevelTop start=/#{/ end=/}/ contains=@clojureNestLevelTop
-  syntax region clojureMapLevelTop matchgroup=clojureParenLevelTop start=/{/ end=/}/ contains=@clojureNestLevelTop
+  syntax region clojureAnnonFnLevelTop matchgroup=clojureParenLevelTop start=/#(/ end=/)/  contains=@clojureNestLevelTop
+  syntax region clojureExprLevelTop    matchgroup=clojureParenLevelTop start=/(/  end=/)/  contains=@clojureNestLevelTop
+  syntax region clojureVectorLevelTop  matchgroup=clojureParenLevelTop start=/\[/ end=/\]/ contains=@clojureNestLevelTop
+  syntax region clojureSetLevelTop     matchgroup=clojureParenLevelTop start=/#{/ end=/}/  contains=@clojureNestLevelTop
+  syntax region clojureMapLevelTop     matchgroup=clojureParenLevelTop start=/{/  end=/}/  contains=@clojureNestLevelTop
   if empty(colors)
     syntax cluster clojureNestLevelTop contains=@clojureTop,clojure.*LevelTop
   else
@@ -71,11 +71,11 @@ function! clojure#syntax#define_rainbows(colors)
   let len = len(a:colors)
   for i in range(len)
     let next = (i + 1) % len
-    execute printf('syntax region clojureAnonFnLevel%d matchgroup=clojureParenLevelTop start=/#(/ end=/)/ contained contains=@clojureNestLevel%d', i, i)
-    execute printf('syntax region clojureExprLevel%d matchgroup=clojureParenLevel%d start=/(/ end=/)/ contained contains=@clojureNestLevel%d', i, i, next)
+    execute printf('syntax region clojureAnonFnLevel%d matchgroup=clojureParenLevelTop start=/#(/ end=/)/  contained contains=@clojureNestLevel%d', i, i)
+    execute printf('syntax region clojureExprLevel%d   matchgroup=clojureParenLevel%d  start=/(/  end=/)/  contained contains=@clojureNestLevel%d', i, i, next)
     execute printf('syntax region clojureVectorLevel%d matchgroup=clojureParenLevelTop start=/\[/ end=/\]/ contained contains=@clojureNestLevel%d', i, i)
-    execute printf('syntax region clojureSetLevel%d matchgroup=clojureParenLevelTop start=/#{/ end=/}/ contained contains=@clojureNestLevel%d', i, i)
-    execute printf('syntax region clojureMapLevel%d matchgroup=clojureParenLevelTop start=/{/ end=/}/ contained contains=@clojureNestLevel%d', i, i)
+    execute printf('syntax region clojureSetLevel%d    matchgroup=clojureParenLevelTop start=/#{/ end=/}/  contained contains=@clojureNestLevel%d', i, i)
+    execute printf('syntax region clojureMapLevel%d    matchgroup=clojureParenLevelTop start=/{/  end=/}/  contained contains=@clojureNestLevel%d', i, i)
     execute printf('syntax cluster clojureNestLevel%d contains=@clojureTop,clojure.*Level%d', i, i)
   endfor
 

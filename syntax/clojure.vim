@@ -54,9 +54,9 @@ syntax match clojureKeyword display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+"
 syntax match clojureSymbol display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
 
 syntax match clojureQuote display /['`]/ nextgroup=clojureQuote,clojureQuoted,clojureSymbol
-syntax region clojureQuoted matchgroup=clojureParenLevelQuote start=/#\?(/ end=/)/  contains=@clojureTop,clojureQuoted contained
-syntax region clojureQuoted matchgroup=clojureParenLevelQuote start=/\[/   end=/\]/ contains=@clojureTop,clojureQuoted contained
-syntax region clojureQuoted matchgroup=clojureParenLevelQuote start=/#\?{/ end=/}/  contains=@clojureTop,clojureQuoted contained
+syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?(/ end=/)/  contains=@clojureTop,clojureQuoted contained
+syntax region clojureQuoted matchgroup=clojureParenQuote start=/\[/   end=/\]/ contains=@clojureTop,clojureQuoted contained
+syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?{/ end=/}/  contains=@clojureTop,clojureQuoted contained
 
 syntax match clojureUnquote display /\~@\?/
 syntax match clojureDispatch display /#['^]/
@@ -74,17 +74,17 @@ call clojure#syntax#define_keywords()
 
 " Comments
 syntax match clojureComment /;.*$/
-syntax region clojureIgnoreFormComment matchgroup=clojureParenLevelComment start=/#_(/            end=/)/ contains=clojureRangeComment
-syntax region clojureMacroComment      matchgroup=clojureParenLevelComment start=/(\_s*comment\>/ end=/)/ contains=clojureRangeComment
-syntax region clojureRangeComment matchgroup=clojureParenLevelComment start=/(/  end=/)/  contains=clojureRangeComment contained
-syntax region clojureRangeComment matchgroup=clojureParenLevelComment start=/\[/ end=/\]/ contains=clojureRangeComment contained
-syntax region clojureRangeComment matchgroup=clojureParenLevelComment start=/{/  end=/}/  contains=clojureRangeComment contained
+syntax region clojureIgnoreFormComment matchgroup=clojureParenComment start=/#_(/            end=/)/ contains=clojureRangeComment
+syntax region clojureMacroComment      matchgroup=clojureParenComment start=/(\_s*comment\>/ end=/)/ contains=clojureRangeComment
+syntax region clojureRangeComment matchgroup=clojureParenComment start=/(/  end=/)/  contains=clojureRangeComment contained
+syntax region clojureRangeComment matchgroup=clojureParenComment start=/\[/ end=/\]/ contains=clojureRangeComment contained
+syntax region clojureRangeComment matchgroup=clojureParenComment start=/{/  end=/}/  contains=clojureRangeComment contained
 syntax cluster clojureTop add=clojureIgnoreFormComment,clojureMacroComment
 
 highlight default link clojureIgnoreFormComment clojureComment
 highlight default link clojureMacroComment      clojureComment
 highlight default link clojureRangeComment      clojureComment
-highlight default link clojureParenLevelComment clojureComment
+highlight default link clojureParenComment      clojureComment
 
 
 " highlight
@@ -109,11 +109,11 @@ highlight default link clojureCharacter Character
 highlight default link clojureJavaNew    Structure
 highlight default link clojureJavaMethod Function
 
-highlight default link clojureSymbol          Special
-highlight default link clojureQuote           Special
-highlight default link clojureParenLevelQuote Special
-highlight default link clojureUnquote         Special
-highlight default link clojureDispatch        Special
+highlight default link clojureSymbol     Special
+highlight default link clojureQuote      Special
+highlight default link clojureParenQuote Special
+highlight default link clojureUnquote    Special
+highlight default link clojureDispatch   Special
 
 highlight default link clojureParenLevelTop Define
 highlight default link clojureParenSpecial  Special

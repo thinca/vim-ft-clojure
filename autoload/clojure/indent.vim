@@ -23,7 +23,7 @@ let s:paren_types = {
 \   '[': ['\[', '\]'],
 \ }
 
-let s:PAREN_PATTERN = 'clojureParenLevel\w\+'
+let s:PAREN_PATTERN = 'clojureParen\w\+'
 
 function! s:syn_name()
   let stack = synstack(line('.'), col('.'))

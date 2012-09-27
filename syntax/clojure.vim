@@ -72,6 +72,8 @@ call clojure#syntax#define_parens()
 
 call clojure#syntax#define_keywords()
 
+syntax region clojureQuote matchgroup=clojureParenQuote start=/(quote\>/ end=/)/ contains=@clojureTop,clojureQuoted
+
 " Comments
 syntax match clojureComment /;.*$/
 syntax region clojureIgnoreFormComment matchgroup=clojureParenComment start=/#_(/            end=/)/ contains=clojureRangeComment

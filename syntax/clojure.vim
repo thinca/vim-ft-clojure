@@ -55,7 +55,7 @@ syntax match clojureSymbol display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
 
 syntax match clojureUnquote display /\~@\?/
 syntax match clojureDispatch display /#['^]/
-syntax match clojureDispatch display /\^/
+syntax match clojureMetadata display /\^/
 syntax match clojureAnonFnArgs display /%\d\+\>\|%&\?/
 
 call clojure#syntax#define_keywords()
@@ -116,6 +116,7 @@ highlight default link clojureQuote      Special
 highlight default link clojureParenQuote Special
 highlight default link clojureUnquote    Special
 highlight default link clojureDispatch   Special
+highlight default link clojureMetadata   Special
 
 highlight default link clojureParenLevelTop Define
 highlight default link clojureParenSpecial  Special

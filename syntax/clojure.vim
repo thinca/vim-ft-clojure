@@ -53,26 +53,26 @@ syntax match clojureRegexpCloseParenError display /[\])]/ contained
 syntax match clojureKeyword display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+"
 syntax match clojureSymbol display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
 
-syntax match clojureQuote display /['`]/ nextgroup=clojureQuote,clojureQuoted,clojureSymbol
-syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?(/ end=/)/  contains=@clojureTop,clojureQuoted contained
-syntax region clojureQuoted matchgroup=clojureParenQuote start=/\[/   end=/\]/ contains=@clojureTop,clojureQuoted contained
-syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?{/ end=/}/  contains=@clojureTop,clojureQuoted contained
-
 syntax match clojureUnquote display /\~@\?/
 syntax match clojureDispatch display /#['^]/
 syntax match clojureDispatch display /\^/
 syntax match clojureAnonFnArgs display /%\d\+\>\|%&\?/
 
+call clojure#syntax#define_keywords()
+
 " Java support
 syntax match clojureJavaMethod display /\<\.[a-zA-Z_]\w*\>/
 syntax match clojureJavaNew display /\<\u\w*\.\>/
 
-
+" Parens
 call clojure#syntax#define_parens()
 
-call clojure#syntax#define_keywords()
-
+" Quote
+syntax match clojureQuote display /['`]/ nextgroup=clojureQuote,clojureQuoted,clojureSymbol
 syntax region clojureQuote matchgroup=clojureParenQuote start=/(quote\>/ end=/)/ contains=@clojureTop,clojureQuoted
+syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?(/ end=/)/  contains=@clojureTop,clojureQuoted contained
+syntax region clojureQuoted matchgroup=clojureParenQuote start=/\[/   end=/\]/ contains=@clojureTop,clojureQuoted contained
+syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?{/ end=/}/  contains=@clojureTop,clojureQuoted contained
 
 " Comments
 syntax match clojureComment /;.*$/

@@ -58,7 +58,7 @@ syntax match clojureDispatch display /#['^]/
 syntax match clojureMetadata display /\^/
 syntax match clojureAnonFnArgs display /%\d\+\>\|%&\?/
 
-call clojure#syntax#define_keywords()
+call clojure#syntax#define_words()
 
 " Java support
 syntax match clojureJavaMethod display /\<\.[a-zA-Z_]\w*\>/

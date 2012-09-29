@@ -96,7 +96,7 @@ function! clojure#syntax#define_rainbow_colors()
   endfor
 endfunction
 
-function! clojure#syntax#define_keywords()
+function! clojure#syntax#define_words()
   let files = globpath(&runtimepath, 'dict/clojure/**.txt', 1)
   let highlights = {}
   let dup = {}

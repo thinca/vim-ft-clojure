@@ -6,7 +6,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:default_special = '^$'
-let s:default_proxy = '\%(proxy\|reify\)$'
+let s:default_proxy = '\%(letfn\|proxy\|reify\)$'
 let g:clojure#indent#special =
 \   get(g:, 'clojure#indent#special', s:default_special)
 let g:clojure#indent#proxy =

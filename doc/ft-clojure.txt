@@ -97,7 +97,7 @@ b:clojure_indent_special			*b:clojure_indent_special*
 
 g:clojure#indent#proxy				*g:clojure#indent#proxy*
 b:clojure_indent_proxy				*b:clojure_indent_proxy*
-	Default: '\%(proxy\|reify\)$'
+	Default: '\%(letfn\|proxy\|reify\)$'
 	Specifies a pattern that matches to functions like "proxy".
 	An S-expression contained in this function is treated by "special".
 	Example:

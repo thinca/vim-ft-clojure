@@ -6,11 +6,11 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:default_special = '^$'
-let s:default_proxy = '\%(letfn\|proxy\|reify\)$'
+let s:default_definiens = '\%(letfn\|proxy\|reify\)$'
 let g:clojure#indent#special =
 \   get(g:, 'clojure#indent#special', s:default_special)
-let g:clojure#indent#proxy =
-\   get(g:, 'clojure#indent#proxy', s:default_proxy)
+let g:clojure#indent#definiens =
+\   get(g:, 'clojure#indent#definiens', s:default_definiens)
 
 function! s:match_option(name, target)
   let b = 'b:clojure_indent_' . a:name
@@ -126,7 +126,7 @@ function! clojure#indent#get(lnum)
     let parent = s:match_pairs('(', 'bWn', top_limit)
     let head = s:get_head(parent)
     let pfunc = matchstr(head, '^\s*\zs\w\+')
-    if s:match_option('proxy', pfunc)
+    if s:match_option('definiens', pfunc)
       let use_special = 1
     endif
   endif

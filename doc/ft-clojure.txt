@@ -95,10 +95,10 @@ b:clojure_indent_special			*b:clojure_indent_special*
 <
 	If a function is matched to this pattern, it is treated as latter.
 
-g:clojure#indent#proxy				*g:clojure#indent#proxy*
-b:clojure_indent_proxy				*b:clojure_indent_proxy*
+g:clojure#indent#definiens			*g:clojure#indent#definiens*
+b:clojure_indent_definiens			*b:clojure_indent_definiens*
 	Default: '\%(letfn\|proxy\|reify\)$'
-	Specifies a pattern that matches to functions like "proxy".
+	Specifies a pattern that matches to functions like "letfn" or "proxy".
 	An S-expression contained in this function is treated by "special".
 	Example:
 >
@@ -108,6 +108,7 @@ b:clojure_indent_proxy				*b:clojure_indent_proxy*
 	         arg2))
 	  (func2 []
 	    (...)))
+
 
 NOTE:
 

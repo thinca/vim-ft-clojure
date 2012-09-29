@@ -120,17 +120,17 @@ function! clojure#syntax#define_words()
       endif
       let highlights[type] = 1
       if ns !=# ''
-        execute printf('syntax keyword clojure%s %s/%s', type, ns, symbol)
+        execute printf('syntax keyword clojureWord%s %s/%s', type, ns, symbol)
       endif
       if ns ==# '' || ns ==# 'clojure.core'
-        execute printf('syntax keyword clojure%s %s', type, symbol)
+        execute printf('syntax keyword clojureWord%s %s', type, symbol)
       endif
     endfor
   endfor
   for hl in keys(highlights)
     let link = get(links, hl, hl)
-    execute printf('highlight default link clojure%s %s', hl, link)
-    execute 'syntax cluster clojureAtoms add=clojure' . hl
+    execute printf('highlight default link clojureWord%s %s', hl, link)
+    execute 'syntax cluster clojureAtoms add=clojureWord' . hl
   endfor
 endfunction
 

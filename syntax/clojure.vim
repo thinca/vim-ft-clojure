@@ -41,6 +41,10 @@ syntax region clojureString start=/"/  skip=/\\\\\|\\"/ end=/"/ contains=clojure
 syntax match clojureStringError display /\\./ contained
 syntax match clojureStringSpecial display /\\\%([btnfr"'\\]\|[0-3]\o\{2}\|u\x\{4}\)/ contained
 
+" Dispatch
+syntax match clojureDispatch display /#/ nextgroup=clojureType
+syntax match clojureDispatch display /#['^]/
+
 " Regexp
 syntax region clojureRegexp start=/#"/ skip=/\\\\\|\\"/ end=/"/ keepend contains=clojureRegexpSpecial,clojureRegexpGroup,clojureRegexpClass,clojureRegexpCloseParenError
 syntax match clojureRegexpSpecial display /\\./ contained
@@ -51,10 +55,10 @@ syntax match clojureRegexpCloseParenError display /[\])]/ contained
 
 " Keyword, etc
 syntax match clojureKeyword display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+"
-syntax match clojureSymbol display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
+syntax match clojureSymbol  display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
+syntax match clojureType    display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
 
 syntax match clojureUnquote display /\~@\?/
-syntax match clojureDispatch display /#['^]/
 syntax match clojureMetadata display /\^/
 syntax match clojureAnonFnArgs display /%\d\+\>\|%&\?/
 
@@ -107,6 +111,7 @@ highlight default link clojureRegexpCloseParenError Error
 
 highlight default link clojureKeyword   Operator
 highlight default link clojureCharacter Character
+highlight default link clojureType      Type
 
 highlight default link clojureJavaNew    Structure
 highlight default link clojureJavaMethod Function

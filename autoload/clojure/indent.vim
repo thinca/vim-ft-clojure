@@ -69,6 +69,14 @@ function! s:is_special(word)
   \      s:match_option('special', a:word)
 endfunction
 
+if exists('*shiftwidth')
+  let s:shiftwidth = function('shiftwidth')
+else
+  function! s:shiftwidth()
+    return &shiftwidth
+  endfunction
+endif
+
 function! clojure#indent#get(lnum)
   if a:lnum == 1
     return 0
@@ -138,7 +146,7 @@ function! clojure#indent#get(lnum)
     " Special case:
     " (let [x 10]
     "   something)
-    let indent += &shiftwidth - 1
+    let indent += s:shiftwidth() - 1
   else
     " Normal case:
     " (func [x 10]

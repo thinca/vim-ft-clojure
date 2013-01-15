@@ -82,7 +82,7 @@ function! clojure#syntax#define_rainbows(colors)
   endfor
 
   call clojure#syntax#define_rainbow_colors()
-  augroup filetype-clojure
+  augroup filetype-clojure-syntax-rainbow
     autocmd! ColorScheme * call clojure#syntax#define_rainbow_colors()
   augroup END
 endfunction

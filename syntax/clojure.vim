@@ -37,7 +37,7 @@ syntax match clojureCharacter display /\\formfeed\>/
 call clojure#syntax#define_numbers()
 
 " String
-syntax region clojureString start=/"/  skip=/\\\\\|\\"/ end=/"/ contains=clojureStringError,clojureStringSpecial
+syntax region clojureString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=clojureStringError,clojureStringSpecial
 syntax match clojureStringError display /\\./ contained
 syntax match clojureStringSpecial display /\\\%([btnfr"'\\]\|[0-3]\o\{2}\|u\x\{4}\)/ contained
 
@@ -80,17 +80,22 @@ syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?{/ end=/}/  c
 
 " Comments
 syntax match clojureComment /;.*$/
-syntax region clojureIgnoreFormComment matchgroup=clojureParenComment start=/#_(/            end=/)/ contains=clojureRangeComment
-syntax region clojureMacroComment      matchgroup=clojureParenComment start=/(\_s*comment\>/ end=/)/ contains=clojureRangeComment
-syntax region clojureRangeComment matchgroup=clojureParenComment start=/(/  end=/)/  contains=clojureRangeComment contained
-syntax region clojureRangeComment matchgroup=clojureParenComment start=/\[/ end=/\]/ contains=clojureRangeComment contained
-syntax region clojureRangeComment matchgroup=clojureParenComment start=/{/  end=/}/  contains=clojureRangeComment contained
-syntax cluster clojureTop add=clojureIgnoreFormComment,clojureMacroComment
+syntax region clojureMacroComment start=/(\_s*comment\>/ end=/)/  contains=clojureFormComment
 
-highlight default link clojureIgnoreFormComment clojureComment
-highlight default link clojureMacroComment      clojureComment
-highlight default link clojureRangeComment      clojureComment
-highlight default link clojureParenComment      clojureComment
+syntax match clojureIgnoreNextFormComment /#_/ skipwhite skipempty nextgroup=clojureFormComment
+syntax match clojureFormComment display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+" contained
+syntax match clojureFormComment display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
+syntax match clojureFormComment display /['`]/ nextgroup=clojureFormComment
+syntax region clojureFormComment start=/(/  end=/)/  contains=clojureFormComment contained
+syntax region clojureFormComment start=/\[/ end=/\]/ contains=clojureFormComment contained
+syntax region clojureFormComment start=/{/  end=/}/  contains=clojureFormComment contained
+syntax region clojureFormComment start=/#"/ start=/"/ skip=/\\\\\|\\"/ end=/"/ contained
+
+syntax cluster clojureTop add=clojureIgnoreNextFormComment,clojureMacroComment
+
+highlight default link clojureIgnoreNextFormComment clojureComment
+highlight default link clojureMacroComment          clojureComment
+highlight default link clojureFormComment           clojureComment
 
 
 " highlight

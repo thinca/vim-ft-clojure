@@ -85,7 +85,7 @@ syntax region clojureMacroComment start=/(\_s*comment\>/ end=/)/  contains=cloju
 syntax match clojureIgnoreNextFormComment /#_/ skipwhite skipempty nextgroup=clojureFormComment
 syntax match clojureFormComment display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+" contained
 syntax match clojureFormComment display "[[:alnum:]?!\-_+*.=<>#$/]\+" contained
-syntax match clojureFormComment display /['`]/ nextgroup=clojureFormComment
+syntax match clojureFormComment display /['`]/ nextgroup=clojureFormComment contained
 syntax region clojureFormComment start=/(/  end=/)/  contains=clojureFormComment contained
 syntax region clojureFormComment start=/\[/ end=/\]/ contains=clojureFormComment contained
 syntax region clojureFormComment start=/{/  end=/}/  contains=clojureFormComment contained

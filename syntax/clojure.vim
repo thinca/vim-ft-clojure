@@ -80,7 +80,7 @@ syntax region clojureQuoted matchgroup=clojureParenQuote start=/#\?{/ end=/}/  c
 
 " Comments
 syntax match clojureComment /;.*$/
-syntax region clojureMacroComment start=/(\_s*comment\>/ end=/)/  contains=clojureFormComment
+syntax region clojureMacroComment matchgroup=clojureComment start=/(\_s*comment\>/ end=/)/ contains=clojureFormComment
 
 syntax match clojureIgnoreNextFormComment /#_/ skipwhite skipempty nextgroup=clojureFormComment
 syntax match clojureFormComment display ":\{1,2}[[:alnum:]?!\-_+*.=<>#$/]\+" contained

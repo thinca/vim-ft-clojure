@@ -32,6 +32,9 @@ setlocal lispwords+=ns,clojure.core/ns
 " Java Classes:
 setlocal lispwords+=gen-class,gen-interface
 
+" clojure.test package:
+setlocal lispwords+=deftest,deftest-,testing
+
 setlocal indentexpr=clojure#indent#get(v:lnum)
 
 setlocal noautoindent nosmartindent

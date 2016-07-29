@@ -24,7 +24,7 @@ endif
 
 function! s:colors()
   let base = get(g:clojure#syntax#paren_colors, &background, {})
-  if has('gui_running') && has_key(base, 'gui')
+  if (has('gui_running') || has('termguicolors') && &termguicolors) && has_key(base, 'gui')
     return {'colors': base.gui, 'type': 'gui'}
   elseif has_key(base, 'cterm' . &t_Co)
     return {'colors': base['cterm' . &t_Co], 'type': 'cterm'}

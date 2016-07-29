@@ -42,7 +42,8 @@ g:clojure#syntax#paren_colors			*g:clojure#syntax#paren_colors*
 	the value of 'background'.
 	Each values are also dictionary.  Its key is a environment, value is a
 	list of colors.  The environment is followings.
-	"gui":		This is used when `has("gui_running")` is true.
+	"gui":		This is used when `has("gui_running")` is true or
+			|termguicolors| is set.
 	"term" . &t_Co:	This is used when `has("gui_running")` is false and
 			|t_Co| is matched.
 	"term":		Otherwise.

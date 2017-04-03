@@ -12,7 +12,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 setlocal expandtab
-setlocal iskeyword+=?,-,*,!,+,=,<,>,.,:,/
+setlocal iskeyword+=?,-,*,!,&,+,=,<,>,.,:,/
 
 let &l:define = '^\s*(def\%(-\|n\|n-\|macro\|struct\|multi\)\?'
 setlocal commentstring=;%s

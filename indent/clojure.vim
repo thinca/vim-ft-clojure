@@ -40,5 +40,7 @@ setlocal indentexpr=clojure#indent#get(v:lnum)
 setlocal noautoindent nosmartindent
 setlocal indentkeys=!^F,o,O
 
+let b:undo_indent = 'setlocal lispwords< indentexpr< autoindent< smartindent< indentkeys<'
+
 let &cpo = s:save_cpo
 unlet s:save_cpo

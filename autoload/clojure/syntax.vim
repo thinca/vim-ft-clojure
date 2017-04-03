@@ -22,7 +22,7 @@ if !exists('g:clojure#syntax#paren_colors')
   \ }
 endif
 
-function! s:colors()
+function! s:colors() abort
   let base = get(g:clojure#syntax#paren_colors, &background, {})
   if (has('gui_running') || has('termguicolors') && &termguicolors) && has_key(base, 'gui')
     return {'colors': base.gui, 'type': 'gui'}
@@ -35,7 +35,7 @@ function! s:colors()
 endfunction
 
 
-function! clojure#syntax#define_numbers()
+function! clojure#syntax#define_numbers() abort
   syntax match clojureFloatNumber display "\<[-+]\?[0-9]\+\%(\.[0-9]*\)\?\%([eE][-+]\?[0-9]\+\)\?M\?\>"
   syntax match clojureRatioNumber display "\<[-+]\?[0-9]\+/[0-9]\+\>"
   syntax match clojureIntNumber   display "\<[-+]\?\%(0\|[1-9][0-9]*\|0[xX][0-9A-Fa-f]\+\|0[0-7]\+\)N\?\>"
@@ -54,7 +54,7 @@ function! clojure#syntax#define_numbers()
   highlight default link clojureNumber      Number
 endfunction
 
-function! clojure#syntax#define_parens()
+function! clojure#syntax#define_parens() abort
   let colors = s:colors().colors
   syntax region clojureAnnonFnLevelTop matchgroup=clojureParenSpecial  start=/#(/ end=/)/  contains=@clojureNestLevelTop
   syntax region clojureExprLevelTop    matchgroup=clojureParenLevelTop start=/(/  end=/)/  contains=@clojureNestLevelTop
@@ -69,7 +69,7 @@ function! clojure#syntax#define_parens()
   endif
 endfunction
 
-function! clojure#syntax#define_rainbows(colors)
+function! clojure#syntax#define_rainbows(colors) abort
   let len = len(a:colors)
   for i in range(len)
     let next = (i + 1) % len
@@ -87,7 +87,7 @@ function! clojure#syntax#define_rainbows(colors)
   augroup END
 endfunction
 
-function! clojure#syntax#define_rainbow_colors()
+function! clojure#syntax#define_rainbow_colors() abort
   let dict = s:colors()
   let colors = dict.colors
   let type = dict.type
@@ -96,7 +96,7 @@ function! clojure#syntax#define_rainbow_colors()
   endfor
 endfunction
 
-function! clojure#syntax#define_words()
+function! clojure#syntax#define_words() abort
   let files = globpath(&runtimepath, 'dict/clojure/**.txt', 1)
   let highlights = {}
   let dup = {}

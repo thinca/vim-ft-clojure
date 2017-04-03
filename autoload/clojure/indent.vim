@@ -12,7 +12,7 @@ let g:clojure#indent#special =
 let g:clojure#indent#definiens =
 \   get(g:, 'clojure#indent#definiens', s:default_definiens)
 
-function! s:match_option(name, target)
+function! s:match_option(name, target) abort
   let b = 'b:clojure_indent_' . a:name
   return a:target =~# (exists(b) ? eval(b) : g:clojure#indent#{a:name})
 endfunction
@@ -25,19 +25,19 @@ let s:paren_types = {
 
 let s:PAREN_PATTERN = 'clojureParen\w\+'
 
-function! s:syn_name()
+function! s:syn_name() abort
   let stack = synstack(line('.'), col('.'))
   return empty(stack) ? '' : synIDattr(stack[-1], 'name')
 endfunction
 
-function! s:match_pairs(type, flag, ...)
+function! s:match_pairs(type, flag, ...) abort
   let [open, close] = s:paren_types[a:type]
   let stop = a:0 ? a:1 : 0
   return searchpairpos(open, '', close, a:flag,
   \                    's:syn_name() !~# s:PAREN_PATTERN', stop)
 endfunction
 
-function! s:cmp_pos(pos1, pos2)
+function! s:cmp_pos(pos1, pos2) abort
   for i in range(2)
     if a:pos1[i] > a:pos2[i]
       return -1
@@ -48,7 +48,7 @@ function! s:cmp_pos(pos1, pos2)
   return 0
 endfunction
 
-function! s:max_pos(positions)
+function! s:max_pos(positions) abort
   let max = ''
   let maxpos = [0, 0]
   for [key, pos] in items(a:positions)
@@ -60,11 +60,11 @@ function! s:max_pos(positions)
   return max
 endfunction
 
-function! s:get_head(pos)
+function! s:get_head(pos) abort
   return getline(a:pos[0])[a:pos[1] :]
 endfunction
 
-function! s:is_special(word)
+function! s:is_special(word) abort
   return &l:lispwords =~# '\V\<' . a:word . '\>' ||
   \      s:match_option('special', a:word)
 endfunction
@@ -72,12 +72,12 @@ endfunction
 if exists('*shiftwidth')
   let s:shiftwidth = function('shiftwidth')
 else
-  function! s:shiftwidth()
+  function! s:shiftwidth() abort
     return &shiftwidth
   endfunction
 endif
 
-function! clojure#indent#get(lnum)
+function! clojure#indent#get(lnum) abort
   if a:lnum == 1
     return 0
   endif

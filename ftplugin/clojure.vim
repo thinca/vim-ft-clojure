@@ -17,7 +17,7 @@ setlocal iskeyword+=?,-,*,!,&,+,=,<,>,.,:,/
 let &l:define = '^\s*(def\%(-\|n\|n-\|macro\|struct\|multi\)\?'
 setlocal commentstring=;%s
 
-let b:undo_ftplugin = "setlocal et< isk< cms< def<"
+let b:undo_ftplugin = "setlocal expandtab< iskeyword< commentstring< define<"
 
 
 if has('browsefilter') && !exists('b:browsefilter')

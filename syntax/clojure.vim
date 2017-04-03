@@ -3,7 +3,7 @@
 " Maintainer:  thinca <thinca+vim@gmail.com>
 " License:     zlib License
 
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
 
@@ -135,7 +135,7 @@ highlight default link clojureAnonFnArgs    Delimiter
 highlight default link clojureError Error
 
 
-let b:current_syntax = "clojure"
+let b:current_syntax = 'clojure'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

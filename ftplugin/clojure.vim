@@ -2,7 +2,7 @@
 " Language:    Clojure (http://clojure.org)
 " Maintainer:  thinca <thinca+vim@gmail.com>
 
-if exists("b:did_ftplugin")
+if exists('b:did_ftplugin')
   finish
 endif
 
@@ -17,7 +17,7 @@ setlocal iskeyword+=?,-,*,!,&,+,=,<,>,.,:,/
 let &l:define = '^\s*(def\%(-\|n\|n-\|macro\|struct\|multi\)\?'
 setlocal commentstring=;%s
 
-let b:undo_ftplugin = "setlocal expandtab< iskeyword< commentstring< define<"
+let b:undo_ftplugin = 'setlocal expandtab< iskeyword< commentstring< define<'
 
 
 if has('browsefilter') && !exists('b:browsefilter')

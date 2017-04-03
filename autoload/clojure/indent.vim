@@ -27,7 +27,7 @@ let s:PAREN_PATTERN = 'clojureParen\w\+'
 
 function! s:syn_name()
   let stack = synstack(line('.'), col('.'))
-  return empty(stack) ? '' : synIDattr(stack[-1], "name")
+  return empty(stack) ? '' : synIDattr(stack[-1], 'name')
 endfunction
 
 function! s:match_pairs(type, flag, ...)

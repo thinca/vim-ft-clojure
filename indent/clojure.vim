@@ -2,7 +2,7 @@
 " Language:    Clojure (http://clojure.org)
 " Maintainer:  thinca <thinca+vim@gmail.com>
 
-if exists("b:did_indent")
+if exists('b:did_indent')
   finish
 endif
 let b:did_indent = 1

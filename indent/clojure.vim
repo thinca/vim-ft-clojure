@@ -11,7 +11,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 setlocal lispwords=
-" Defintions:
+" Definitions:
 setlocal lispwords+=def,def-,defn,defn-,defmacro,defmacro-,defmethod,defmulti
 setlocal lispwords+=defonce,defvar,defvar-,defunbound,let,fn,letfn,binding,proxy
 setlocal lispwords+=defnk,definterface,defproject,defprotocol,deftype,defrecord,reify
